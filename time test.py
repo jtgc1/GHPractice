@@ -1,7 +1,11 @@
 import cv2
 import numpy as np
+val = 0
+a = '19'
+b = '/'
+c = '20'
 
-print((2.4*10**8)//(6*10**6))
+print(a+b+c)
 
 #make a rocket ship that leaves the earth's atmosphere
 #regressive path finding algorithm?
