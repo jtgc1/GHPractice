@@ -1,8 +1,10 @@
 import cv2
 import numpy as np
+import math
 
 #make it startable from a specific point in real time
-#add a clock to the top left
+#make it scrollable
+#switch to a pre calculated option and then simulate it once the math is done
 
 #make a rocket ship that leaves the earth's atmosphere
 #regressive path finding algorithm?
@@ -15,21 +17,16 @@ t = 0
 oldDate = 'temp'
 
 G = 6.647*10**-11
-dt = 60*60
+dt = 60
 # scalar = 2.496*10**8
-scalar = 1*10**6
+scalar = 0.75*10**6
 
 xc = 750*scalar
 yc = 400*scalar
 
-# planetsOld = [[1.9885*10**30, xc, yc, 0, 0, [0, 165, 255],25],
-# [0.33 * 10 ** 24, xc+5.79*10**10, yc, 0, 47900, [255, 255, 255],10], #mercury
-# [4.87 * 10 ** 24, xc+1.082*10**11, yc, 0, 35000, [255, 255, 255],10], #venus
-# [5.97 * 10 ** 24, xc+1.496*10**11, yc, 0, 29722, [165, 165, 0],3], #earth
-# [0.073 * 10 ** 24, xc+1.496*10**11-3.84467*10**8, yc, 0, 29722+1023, [255, 255, 255], 1]] #moon
-
-planetsOld = [[5.97 * 10 ** 24, xc, yc, 0, -12.5097, [165, 165, 0],25], #earth
-[0.073 * 10 ** 24, xc+3.84467*10**8, yc, 0, 1023.055, [255, 255, 255], 5]] #moon
+planetsOld = [[5.97 * 10 ** 24, xc, yc, 0, -12.5097, [165, 165, 0],1.2756*10**7], #earth
+[0.073 * 10 ** 24, xc+3.84467*10**8, yc, 0, 1023.055, [255, 255, 255], 3.476*10**6], #moon
+[5000, xc + 6.4*10**6, yc, 11365*math.cos(math.pi/8.6), 11200*math.sin(math.pi/8.6), [255,255,255],30]]
 
 planetsNew = planetsOld
 
@@ -80,12 +77,27 @@ def colorFrame(color,x,y,size):
     xscaled = int(x//(scalar))
     yscaled = int(y//(scalar))
 
+    sizeScaled = int(size//scalar)
+    if sizeScaled == 0:
+        sizeScaled = 1
+
+    if sizeScaled%2 == 1:
+        r = sizeScaled//2 + 1
+    else:
+        r = sizeScaled//2
+
+    print(xscaled,yscaled,sizeScaled)
+
     # print(size, xscaled,yscaled)
     if yscaled < h and xscaled > 0:
         try:
-            for i in range(size):
-                for j in range(size):
-                    frame[h-yscaled+size//2-i][xscaled+size//2-j] = color
+            for i in range(r):
+                l = int(math.sqrt(r**2-i**2))
+                for j in range(l):
+                    frame[h-yscaled+i][xscaled+j] = color
+                    frame[h - yscaled - i][xscaled - j] = color
+                    frame[h - yscaled + j][xscaled - i] = color
+                    frame[h - yscaled - j][xscaled + i] = color
         except:
             pass
 

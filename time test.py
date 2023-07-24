@@ -1,12 +1,8 @@
 import cv2
 import numpy as np
-val = 0
-a = '19'
-b = '/'
-c = '20'
+import math
 
-print(a+b+c)
+pi = math.pi
 
-#make a rocket ship that leaves the earth's atmosphere
-#regressive path finding algorithm?
-#trip ends if they get to the location or go past the raial distance of the location or go past the sun
+for i in range(0):
+    print(i)
