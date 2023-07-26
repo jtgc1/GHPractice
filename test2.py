@@ -18,7 +18,7 @@ oldDate = 'temp'
 scalar = 1
 
 def colorFrame(color,x,y,size):
-    global frame,h,w,scalar,h
+    global frame,h,w,scalar
     xscaled = int(x//(scalar))
     yscaled = int(y//(scalar))
 
